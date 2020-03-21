@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 class FakeIrb
@@ -24,6 +26,9 @@ RSpec.describe IRBTracker::IRBLoggable do
 
   it 'logs command and result' do
     irb_context.evaluate(arg, 22)
-    expect(logger).to have_received(:info).with(source: 'irb_console', command: arg, result: '4', user: nil)
+    expect(logger).to have_received(:info).with(source: 'irb_console',
+                                                command: arg,
+                                                result: '4',
+                                                user: nil)
   end
 end

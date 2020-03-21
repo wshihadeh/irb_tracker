@@ -1,20 +1,23 @@
+# frozen_string_literal: true
+
 require 'net/ldap'
 
 module IRBTracker
+  #:nodoc:
   class LDAPLogin
-  	class << self
+    class << self
       attr_reader :current_user
 
       def authenticate(username, password)
         @current_user = username
         conn = ldap_connection
-        filter = Net::LDAP::Filter.eq("mail", username)
+        filter = Net::LDAP::Filter.eq('mail', username)
         conn.bind_as(filter: filter, password: password)
-      rescue
+      rescue StandardError
         false
       end
 
-    private
+      private
 
       def ldap_connection
         conn = Net::LDAP.new(
@@ -25,6 +28,7 @@ module IRBTracker
         )
         conn.auth ENV['LDAP_ADMIN_USER'], ENV['LDAP_ADMIN_PASSWORD']
         return false unless conn.bind
+
         conn
       end
     end

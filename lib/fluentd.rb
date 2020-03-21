@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
 require 'fluent-logger'
 
+#:nodoc:
 class Fluentd
   def self.get_logger(**options)
     service_name = options.delete(:service_name)
@@ -17,11 +20,13 @@ class Fluentd
     proc do |severity, datetime, progname, message|
       map = { level: severity }
       map[:message] = message[:error] || message[:event] || message[:command]
-      [:error, :error_trace, :command, :result, :event, :name, :args, :source].each do |item|
+      %i[error error_trace command result event name args source].each do |item|
         map[item] = message[item] if message[item] && !message[item].empty?
       end
       map[:progname] = progname if progname
-      map['@timestamp'] = datetime.strftime('%Y-%m-%dT%H:%M:%S.%3NZ') if datetime
+      if datetime
+        map['@timestamp'] = datetime.strftime('%Y-%m-%dT%H:%M:%S.%3NZ')
+      end
       map[:environment] = ENV.fetch('FLUENTD_LOGGING_ENVIRONMENT', 'undefined')
       map[:service_name] = service_name
       map[:app_version] = ENV.fetch('APP_VERSION', 'undefined')

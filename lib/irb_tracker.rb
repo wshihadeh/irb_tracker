@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
 require 'irb_tracker/version'
 
+#:nodoc:
 module IRBTracker
 end
 

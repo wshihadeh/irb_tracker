@@ -1,0 +1,21 @@
+Style/ModuleFunction:
+  Enabled: false
+
+Metrics/MethodLength:
+  Max: 20
+
+Metrics/AbcSize:
+  Max: 17
+
+Metrics/CyclomaticComplexity:
+  Max: 8
+
+Metrics/ModuleLength:
+  Exclude:
+    - spec/*
+    - spec/**/*spec.rb
+Metrics/BlockLength:
+  Exclude:
+    - spec/*
+    - spec/**/*spec.rb
+    - rabbitmq_client.gemspec
