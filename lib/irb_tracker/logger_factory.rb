@@ -2,7 +2,7 @@
 
 #:nodoc:
 module LoggerFactory
-  def self.create(service_name)
+  def self.create(service_name, file_name)
     if ENV['FLUENTD_LOGGING_ENABLED'] == 'true'
       require_relative '../fluentd'
       Fluentd.get_logger(
@@ -14,7 +14,7 @@ module LoggerFactory
       require 'logger'
       log_folder = 'log'
       Dir.mkdir(log_folder) unless Dir.exist?(log_folder)
-      Logger.new("./#{log_folder}/console.log")
+      Logger.new("./#{log_folder}/#{file_name}")
     end
   end
 end
