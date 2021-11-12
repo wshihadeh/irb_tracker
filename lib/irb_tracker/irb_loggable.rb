@@ -5,8 +5,8 @@ require 'irb_tracker/logger_factory'
 module IRBTracker
   #:nodoc:
   class IRBLoggable < Module
-    def initialize(service_name = 'undefined')
-      logger = LoggerFactory.create service_name
+    def initialize(service_name = 'undefined', file_name = 'console.log')
+      logger = LoggerFactory.create service_name, file_name
       # rubocop:disable Style/RedundantBegin
       define_method :evaluate do |*args, &block|
         begin
